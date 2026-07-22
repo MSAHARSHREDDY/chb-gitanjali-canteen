@@ -1,0 +1,6 @@
+{
+  "name": "Geetanjali School Canteen",
+  "description": "An ultra-modern, premium school canteen portal for parents to order healthy, nutritious, and hygienic meals for their children.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

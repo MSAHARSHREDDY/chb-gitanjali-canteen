@@ -1,0 +1,99 @@
+{
+  "name": "KVR Flight Restaurant - Reservation Flow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "restaurant-reservation",
+        "responseMode": "onReceived",
+        "responseData": "{\"success\": true, \"message\": \"Reservation received!\"}",
+        "options": {}
+      },
+      "id": "e4f8cc76-63d1-41db-baef-c25e4088a2c2",
+      "name": "Reservation Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        220,
+        280
+      ],
+      "webhookId": "replace-with-your-webhook-id"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "INSERT_GOOGLE_SHEET_ID_HERE",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Sheet1",
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $json.body.name }}",
+            "Email": "={{ $json.body.email }}",
+            "Date": "={{ $json.body.date }}",
+            "Guests": "={{ $json.body.guests }}",
+            "Notes": "={{ $json.body.notes }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "2701f422-b060-4bfc-a2ab-41c30eab6d8f",
+      "name": "Save to Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        460,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "reservations@kvrflight.com",
+        "toEmail": "={{ $json.body.email }}",
+        "subject": "KVR Flight Restaurant - Reservation Confirmed",
+        "text": "=Dear {{ $json.body.name }},\n\nYour reservation for {{ $json.body.guests }} passenger(s) on {{ $json.body.date }} is confirmed.\n\nThank you for choosing KVR Flight Restaurant.\n\nSpecial Requests: {{ $json.body.notes }}\n\nBest regards,\nKVR Flight Team\nHCJC+39Q, Gandi Maisamma, Hyderabad\n0120 524 4540",
+        "options": {}
+      },
+      "id": "f5ed4940-2b1b-4228-aa96-abfc0b12bc1a",
+      "name": "Send Confirmation Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        680,
+        280
+      ]
+    }
+  ],
+  "connections": {
+    "Reservation Webhook": {
+      "main": [
+        [
+          {
+            "node": "Save to Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save to Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Send Confirmation Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {}
+}
