@@ -564,10 +564,7 @@ export function Checkout() {
                     </div>
                   </div>
                   
-                  {/* Info note */}
-                  <div className="text-center w-full mt-2">
-                    <p className="text-[10px] text-emerald-400 font-bold animate-pulse">👆 Tap QR to open payment app</p>
-                  </div>
+                 
 
                   {/* High Quality Download Button */}
                   <button
