@@ -148,6 +148,37 @@ export function DeadlineBanner() {
         msLeft = getMsLeftToKolkataTarget(now, 1, 6, 0);
       }
       
+      
+      const getTargetDateStr = (targetDayIndex: number, targetHour: number, targetMinute: number) => {
+        let targetDate = new Date(now.getTime());
+        for (let i = 0; i < 8; i++) {
+          const kObj = getKolkataTimeObj(targetDate);
+          if (kObj.dayIndex === targetDayIndex) {
+            const targetUtcYear = kObj.year;
+            const targetUtcMonth = kObj.month;
+            const targetUtcDate = kObj.date;
+            const targetInKolkataUtc = Date.UTC(targetUtcYear, targetUtcMonth, targetUtcDate, targetHour, targetMinute, 0, 0);
+            const targetMs = targetInKolkataUtc - (5.5 * 60 * 60 * 1000);
+            if (targetMs > now.getTime()) {
+              const d = new Date(targetMs + 5.5 * 60 * 60 * 1000);
+              return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
+            }
+          }
+          targetDate.setTime(targetDate.getTime() + 24 * 60 * 60 * 1000);
+        }
+        return null;
+      };
+
+      const mapNameToIndex = { "Monday": 1, "Tuesday": 2, "Wednesday": 3, "Thursday": 4, "Friday": 5, "Saturday": 6, "Sunday": 0 };
+      const currentTargetDate = getTargetDateStr(mapNameToIndex[targetDayName], 6, 0);
+      
+      // DATE-BASED OVERRIDE for 27-07-2026 and 28-07-2026
+      if (currentTargetDate === "2026-07-27" || currentTargetDate === "2026-07-28" || (targetDayName === "Wednesday" && !isOpen && currentTargetDate === "2026-07-29" && (curDayIndex === 1 || curDayIndex === 2))) {
+        targetDayName = "Wednesday";
+        isOpen = true;
+        msLeft = getMsLeftToKolkataTarget(now, 3, 6, 0);
+      }
+
       setIsOrderingClosed(!isOpen);
       setActiveDay(targetDayName);
       
@@ -192,12 +223,38 @@ export function DeadlineBanner() {
   if (isExcludedPath) return null;
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="w-full relative z-30"
-    >
+    <div className="w-full relative z-30 flex flex-col">
+      {/* Special Closure Notice */}
+      {(() => {
+        const now = new Date();
+        const kolkataTimeMs = now.getTime() + (5.5 * 60 * 60 * 1000);
+        const kolkataDate = new Date(kolkataTimeMs);
+        const dStr = kolkataDate.getUTCFullYear() + "-" + String(kolkataDate.getUTCMonth() + 1).padStart(2, '0') + "-" + String(kolkataDate.getUTCDate()).padStart(2, '0');
+        
+        if (dStr >= "2026-07-25" && dStr <= "2026-07-28") {
+          return (
+            <div className="w-full bg-gradient-to-r from-amber-950 via-orange-950 to-amber-950 text-white py-1.5 px-3 text-center border-b border-orange-500/20 shadow-sm backdrop-blur-md relative overflow-hidden">
+              <div className="max-w-7xl mx-auto flex items-center justify-center gap-2 relative z-10 text-[11px] sm:text-xs">
+                <span className="bg-orange-500/20 text-orange-400 px-1.5 py-0.5 rounded font-mono text-[9px] uppercase tracking-wider border border-orange-500/30 font-bold shrink-0">
+                  📢 Notice
+                </span>
+                <p className="text-orange-200 font-medium tracking-wide">
+                  <strong className="text-white font-bold">Canteen is closed on 27-07-2026, 28-07-2026</strong> i.e on Monday and Tuesday
+                </p>
+              </div>
+            </div>
+          );
+        }
+        return null;
+      })()}
+
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="w-full relative"
+      >
+
       {isOrderingClosed ? (
         // Spectacular Unique Styling for Orders Closed
         <div className="w-full bg-gradient-to-r from-red-950 via-rose-950 to-red-950 text-white py-1.5 px-3 text-center border-b border-rose-500/20 shadow-sm backdrop-blur-md relative overflow-hidden">
@@ -229,5 +286,6 @@ export function DeadlineBanner() {
         </div>
       )}
     </motion.div>
+    </div>
   );
 }

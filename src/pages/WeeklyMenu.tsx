@@ -206,6 +206,7 @@ export function WeeklyMenu() {
   const [realActiveDay, setRealActiveDay] = useState<string>("Monday");
   const [realCurrentDay, setRealCurrentDay] = useState<string>("Monday");
 
+
   const getKolkataTimeObj = (date: Date) => {
     const kolkataTimeMs = date.getTime() + (5.5 * 60 * 60 * 1000);
     const kolkataDate = new Date(kolkataTimeMs);
@@ -339,6 +340,37 @@ export function WeeklyMenu() {
         msLeft = getMsLeftToKolkataTarget(now, 1, 6, 0);
       }
       
+      
+      const getTargetDateStr = (targetDayIndex: number, targetHour: number, targetMinute: number) => {
+        let targetDate = new Date(now.getTime());
+        for (let i = 0; i < 8; i++) {
+          const kObj = getKolkataTimeObj(targetDate);
+          if (kObj.dayIndex === targetDayIndex) {
+            const targetUtcYear = kObj.year;
+            const targetUtcMonth = kObj.month;
+            const targetUtcDate = kObj.date;
+            const targetInKolkataUtc = Date.UTC(targetUtcYear, targetUtcMonth, targetUtcDate, targetHour, targetMinute, 0, 0);
+            const targetMs = targetInKolkataUtc - (5.5 * 60 * 60 * 1000);
+            if (targetMs > now.getTime()) {
+              const d = new Date(targetMs + 5.5 * 60 * 60 * 1000);
+              return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
+            }
+          }
+          targetDate.setTime(targetDate.getTime() + 24 * 60 * 60 * 1000);
+        }
+        return null;
+      };
+
+      const mapNameToIndex = { "Monday": 1, "Tuesday": 2, "Wednesday": 3, "Thursday": 4, "Friday": 5, "Saturday": 6, "Sunday": 0 };
+      const currentTargetDate = getTargetDateStr(mapNameToIndex[targetDayName], 6, 0);
+      
+      // DATE-BASED OVERRIDE for 27-07-2026 and 28-07-2026
+      if (currentTargetDate === "2026-07-27" || currentTargetDate === "2026-07-28" || (targetDayName === "Wednesday" && !isOpen && currentTargetDate === "2026-07-29" && (curDayIndex === 1 || curDayIndex === 2))) {
+        targetDayName = "Wednesday";
+        isOpen = true;
+        msLeft = getMsLeftToKolkataTarget(now, 3, 6, 0);
+      }
+
       setIsOrderingClosed(!isOpen);
       setRealActiveDay(targetDayName);
       setRealCurrentDay(curDayName);
