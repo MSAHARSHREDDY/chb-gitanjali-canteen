@@ -361,7 +361,7 @@ export function WeeklyMenu() {
         return null;
       };
 
-      const mapNameToIndex = { "Monday": 1, "Tuesday": 2, "Wednesday": 3, "Thursday": 4, "Friday": 5, "Saturday": 6, "Sunday": 0 };
+      const mapNameToIndex: Record<string, number> = { "Monday": 1, "Tuesday": 2, "Wednesday": 3, "Thursday": 4, "Friday": 5, "Saturday": 6, "Sunday": 0 };
       const currentTargetDate = getTargetDateStr(mapNameToIndex[targetDayName], 6, 0);
       
       // DATE-BASED OVERRIDE for 27-07-2026 and 28-07-2026
