@@ -138,7 +138,7 @@ export function Login() {
   };
 
   return (
-    <div className="flex-grow w-full flex flex-col justify-center items-center py-10 sm:py-12 px-4 sm:px-6 lg:px-8 relative overflow-x-hidden font-sans min-h-screen bg-[#020211]/40">
+    <div className="flex-grow w-full flex flex-col justify-center items-center py-4 sm:py-6 px-4 sm:px-6 lg:px-8 relative overflow-x-hidden font-sans bg-[#020211]/40">
       
       {/* Immersive Animated Space Orbs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0">
@@ -146,10 +146,10 @@ export function Login() {
         <div className="absolute bottom-[-15%] right-[-10%] w-[350px] h-[350px] sm:w-[600px] sm:h-[600px] bg-gradient-to-tr from-rose-500/10 via-blue-500/5 to-transparent rounded-full blur-[90px] sm:blur-[120px] animate-float-reverse"></div>
       </div>
 
-      <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10 text-center mb-3 sm:mb-8 mt-1 sm:mt-0">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10 text-center mb-3 sm:mb-5 mt-1 sm:mt-0">
         <div 
           onClick={() => { setIsForgotPassword(false); setForgotStep('email'); }} 
-          className="inline-flex cursor-pointer items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 text-white shadow-[0_0_25px_rgba(79,70,229,0.5)] mb-2 sm:mb-5 hover:scale-110 active:scale-95 transition-all duration-300 border border-white/20 select-none"
+          className="inline-flex cursor-pointer items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 text-white shadow-[0_0_25px_rgba(79,70,229,0.5)] mb-2 sm:mb-3 hover:scale-110 active:scale-95 transition-all duration-300 border border-white/20 select-none"
         >
           <Coffee className="w-6 h-6 sm:w-8 sm:h-8 animate-pulse text-indigo-100" />
         </div>
@@ -167,10 +167,10 @@ export function Login() {
         transition={{ duration: 0.5 }}
         className="sm:mx-auto sm:w-full sm:max-w-md relative z-10 px-4 sm:px-0"
       >
-        <div className="bg-[#15193B]/70 border border-white/15 backdrop-blur-2xl py-5 px-5 sm:py-10 sm:px-10 shadow-[0_25px_60px_rgba(0,0,0,0.6)] rounded-[2rem] sm:rounded-[2.5rem] hover:border-indigo-500/35 transition-all duration-500">
+        <div className="bg-[#15193B]/70 border border-white/15 backdrop-blur-2xl py-4 px-5 sm:py-6 sm:px-8 shadow-[0_25px_60px_rgba(0,0,0,0.6)] rounded-[2rem] sm:rounded-[2.5rem] hover:border-indigo-500/35 transition-all duration-500">
            
           {!isForgotPassword && (
-            <div className="flex flex-col sm:flex-row bg-slate-900/60 p-1 rounded-2xl border border-white/10 mb-4 sm:mb-8 select-none gap-1">
+            <div className="flex flex-col sm:flex-row bg-slate-900/60 p-1 rounded-2xl border border-white/10 mb-4 sm:mb-6 select-none gap-1">
               <button
                 type="button"
                 onClick={() => { setRole('parent'); setIsSignUp(false); }}
@@ -222,14 +222,14 @@ export function Login() {
                       <Mail className="w-5 h-5 shrink-0 text-[#FF8E53]" />
                       <p>Specify the registered parent email address. An automatic temporary password will be given for immediate login.</p>
                     </div>
-                    <div className="space-y-1.5">
+                    <div className="space-y-1">
                       <label className="text-[9px] sm:text-[10px] text-slate-400 uppercase font-black tracking-widest leading-none">Registered Email</label>
                       <input 
                         type="email" 
                         required 
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full bg-slate-950/80 border border-white/10 rounded-xl px-4 py-2.5 sm:py-3.5 text-sm font-semibold text-white focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all outline-none" 
+                        className="w-full bg-slate-950/80 border border-white/10 rounded-xl px-4 py-2 sm:py-2.5 text-sm font-semibold text-white focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all outline-none" 
                       />
                     </div>
                   </div>
@@ -238,7 +238,7 @@ export function Login() {
                   <button 
                     type="submit" 
                     disabled={isLoading}
-                    className="w-full py-3 sm:py-4 flex justify-center text-white font-display font-black text-xs uppercase tracking-widest rounded-xl transition-all duration-300 disabled:opacity-50 flex items-center gap-2 cursor-pointer shadow-lg bg-gradient-to-r from-blue-600 translate-y-2 to-purple-600 shadow-blue-500/15"
+                    className="w-full py-2.5 sm:py-3 flex justify-center text-white font-display font-black text-xs uppercase tracking-widest rounded-xl transition-all duration-300 disabled:opacity-50 flex items-center gap-2 cursor-pointer shadow-lg bg-gradient-to-r from-blue-600 translate-y-2 to-purple-600 shadow-blue-500/15"
                   >
                     {isLoading ? (
                       <div className="w-5 h-5 border-2 border-white/50 border-t-white rounded-full animate-spin" />
@@ -260,7 +260,7 @@ export function Login() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
-                className="space-y-3 sm:space-y-5 text-left" 
+                className="space-y-3 sm:space-y-4 text-left" 
                 onSubmit={handleLogin}
               >
                 {role === 'admin' && (
@@ -274,42 +274,42 @@ export function Login() {
 
                 {isSignUp && (role === 'parent' || role === 'teacher') && (
                   <>
-                    <div className="space-y-1.5">
+                    <div className="space-y-1">
                       <label className="text-[9px] sm:text-[10px] text-slate-400 uppercase font-black tracking-widest leading-none">Full Name</label>
                       <input 
                         type="text" 
                         required 
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="w-full bg-slate-950/80 border border-white/10 rounded-xl px-4 py-2.5 sm:py-3.5 text-sm font-semibold text-white focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all outline-none" 
+                        className="w-full bg-slate-950/80 border border-white/10 rounded-xl px-4 py-2 sm:py-2.5 text-sm font-semibold text-white focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all outline-none" 
                       />
                     </div>
 
-                    <div className="space-y-1.5">
+                    <div className="space-y-1">
                       <label className="text-[9px] sm:text-[10px] text-slate-400 uppercase font-black tracking-widest leading-none">Mobile Contact</label>
                       <input 
                         type="tel" 
                         required 
                         value={mobile}
                         onChange={(e) => setMobile(e.target.value)}
-                        className="w-full bg-slate-950/80 border border-white/10 rounded-xl px-4 py-2.5 sm:py-3.5 text-sm font-semibold text-white focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all outline-none" 
+                        className="w-full bg-slate-950/80 border border-white/10 rounded-xl px-4 py-2 sm:py-2.5 text-sm font-semibold text-white focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all outline-none" 
                       />
                     </div>
                   </>
                 )}
 
-                <div className="space-y-1.5">
+                <div className="space-y-1">
                   <label className="text-[9px] sm:text-[10px] text-slate-400 uppercase font-black tracking-widest leading-none">Email Address</label>
                   <input 
                     type="email" 
                     required 
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-slate-950/80 border border-white/10 rounded-xl px-4 py-2.5 sm:py-3.5 text-sm font-semibold text-white focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all outline-none" 
+                    className="w-full bg-slate-950/80 border border-white/10 rounded-xl px-4 py-2 sm:py-2.5 text-sm font-semibold text-white focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all outline-none" 
                   />
                 </div>
 
-                <div className="space-y-1.5">
+                <div className="space-y-1">
                   <label className="text-[9px] sm:text-[10px] text-slate-400 uppercase font-black tracking-widest leading-none">Password</label>
                   <div className="relative">
                     <input 
@@ -317,7 +317,7 @@ export function Login() {
                       required 
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full bg-slate-950/80 border border-white/10 rounded-xl pl-4 pr-12 py-2.5 sm:py-3.5 text-sm font-semibold text-white focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all outline-none" 
+                      className="w-full bg-slate-950/80 border border-white/10 rounded-xl pl-4 pr-12 py-2 sm:py-2.5 text-sm font-semibold text-white focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all outline-none" 
                     />
                     <button
                       type="button"
@@ -352,7 +352,7 @@ export function Login() {
                   <button 
                     type="submit" 
                     disabled={isLoading}
-                    className={`w-full py-3 sm:py-4 flex justify-center font-display font-black text-xs uppercase tracking-widest rounded-xl transition-all duration-300 disabled:opacity-50 flex items-center gap-2 cursor-pointer shadow-lg group border-none ${
+                    className={`w-full py-2.5 sm:py-3 flex justify-center font-display font-black text-xs uppercase tracking-widest rounded-xl transition-all duration-300 disabled:opacity-50 flex items-center gap-2 cursor-pointer shadow-lg group border-none ${
                         role === 'admin' 
                           ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 shadow-amber-500/10 hover:shadow-amber-500/25 hover:scale-[1.01] border border-amber-400 font-bold' 
                           : 'text-white ' + (role === 'teacher'
