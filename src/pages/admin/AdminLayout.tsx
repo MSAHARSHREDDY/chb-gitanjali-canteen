@@ -141,13 +141,50 @@ export function AdminLayout() {
     // Load initial history baseline immediately
     fetchAndSyncNotifications(true);
 
-    // Client-side polling interval (runs every 6 seconds)
-    const activePoll = setInterval(() => {
-      fetchAndSyncNotifications(false);
-    }, 6000);
+    // Subscribe to SSE for real-time notifications
+    const sse = new EventSource(`/api/admin/notifications/sse?token=${token}`);
+    
+    sse.addEventListener("admin_notification", (event) => {
+      try {
+        const newNotif = JSON.parse(event.data);
+        
+        // Add to state
+        setNotifications(prev => [newNotif, ...prev]);
+        setUnreadCount(prev => prev + 1);
+        seenIdsRef.current.add(newNotif._id);
+        
+        // Show toast
+        toast.success(
+          <div className="flex flex-col gap-1 font-sans text-xs">
+            <span className="font-bold text-white text-[11px] uppercase tracking-wide flex items-center gap-1.5">
+              <span className="text-gold-500 font-mono animate-bounce">✈️</span> {newNotif.title}
+            </span>
+            <span className="text-gray-300">{newNotif.message}</span>
+          </div>,
+          {
+            duration: 8000,
+            position: "top-right",
+            style: {
+              background: "#18181b",
+              color: "#fff",
+              border: "1px solid rgba(245, 158, 11, 0.2)"
+            }
+          }
+        );
+        
+        // Play sound if not muted
+        if (!soundMuted) {
+          const audio = new Audio('/notification.mp3');
+          audio.volume = 0.5;
+          audio.play().catch(e => console.error("Audio block:", e));
+        }
+      } catch (e) {
+        console.error("Failed to parse SSE notification:", e);
+      }
+    });
 
     return () => {
-      clearInterval(activePoll);
+      sse.close();
     };
   }, [token, soundMuted]);
 
