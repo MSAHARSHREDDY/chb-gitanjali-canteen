@@ -119,10 +119,11 @@ export function Specials() {
                       </div>
                       
                       <button
+                        disabled={true}
                         onClick={() => addToCart({ id: item.id, name: item.name, price: item.price, image: item.image, quantity: qty })}
-                        className="mt-auto w-full py-2 bg-white/5 hover:bg-gold-500/20 text-gold-500 rounded border border-gold-500/30 hover:border-gold-500 flex items-center justify-center gap-2 transition-all text-xs tracking-wider uppercase cursor-pointer relative z-10"
+                        className="mt-auto w-full py-2 bg-white/5 text-gray-500 rounded border border-gray-500/30 flex items-center justify-center gap-2 transition-all text-xs tracking-wider uppercase cursor-not-allowed relative z-10"
                       >
-                        <Plus className="w-4 h-4" /> Add to Order
+                        <Plus className="w-4 h-4" /> Temporarily Closed
                       </button>
                     </div>
                   );

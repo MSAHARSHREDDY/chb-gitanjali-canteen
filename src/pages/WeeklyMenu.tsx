@@ -569,30 +569,7 @@ export function WeeklyMenu() {
   };
 
   const getDayStatus = (dayName: string) => {
-    const today = computedToday;
-    const target = activeDayOfAction;
-
-    if (dayName === today) {
-      if (dayName === target && !isOrderingClosed) {
-        return "today-active";
-      } else {
-        return "today-closed";
-      }
-    }
-
-    if (dayName === target) {
-      return isOrderingClosed ? "target-closed" : "active";
-    }
-
-    const DAYS_ORDER = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    const dayIdx = DAYS_ORDER.indexOf(dayName);
-    const todayIdx = DAYS_ORDER.indexOf(today);
-
-    if (dayIdx < todayIdx) {
-      return "closed";
-    }
-
-    return "future";
+    return "closed"; // TEMPORARY CLOSURE
   };
 
   // Automatically scroll down to the active day card when menu page is loaded or simulated day is selected

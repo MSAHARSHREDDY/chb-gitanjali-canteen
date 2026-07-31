@@ -263,6 +263,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   const addToCart = (item: { id: string | number; name: string; price: number; image?: string; images?: string[]; quantity?: number }, defaultStudent?: string) => {
+    toast.error("Canteen is temporarily closed. We will let you know once we reopen.", { id: 'temp-closed' });
+    return;
+
     const activeStudent = defaultStudent || (students[0] && students[0].name) || 'Registered Student';
     const originalItemId = item.id;
     // unique cart key so same dish for different students are managed separately

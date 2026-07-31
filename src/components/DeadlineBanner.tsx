@@ -179,7 +179,8 @@ export function DeadlineBanner() {
         msLeft = getMsLeftToKolkataTarget(now, 3, 6, 0);
       }
 
-      setIsOrderingClosed(!isOpen);
+      isOpen = false; // TEMPORARY CLOSURE
+      setIsOrderingClosed(true); // TEMPORARY CLOSURE
       setActiveDay(targetDayName);
       
       // Strict Redirection logic
@@ -231,20 +232,7 @@ export function DeadlineBanner() {
         const kolkataDate = new Date(kolkataTimeMs);
         const dStr = kolkataDate.getUTCFullYear() + "-" + String(kolkataDate.getUTCMonth() + 1).padStart(2, '0') + "-" + String(kolkataDate.getUTCDate()).padStart(2, '0');
         
-        if (dStr >= "2026-07-25" && dStr <= "2026-07-28") {
-          return (
-            <div className="w-full bg-gradient-to-r from-amber-950 via-orange-950 to-amber-950 text-white py-1.5 px-3 text-center border-b border-orange-500/20 shadow-sm backdrop-blur-md relative overflow-hidden">
-              <div className="max-w-7xl mx-auto flex items-center justify-center gap-2 relative z-10 text-[11px] sm:text-xs">
-                <span className="bg-orange-500/20 text-orange-400 px-1.5 py-0.5 rounded font-mono text-[9px] uppercase tracking-wider border border-orange-500/30 font-bold shrink-0">
-                  📢 Notice
-                </span>
-                <p className="text-orange-200 font-medium tracking-wide">
-                  <strong className="text-white font-bold">Canteen is closed on 27-07-2026, 28-07-2026</strong> i.e on Monday and Tuesday
-                </p>
-              </div>
-            </div>
-          );
-        }
+        if (false) {}
         return null;
       })()}
 
@@ -266,7 +254,7 @@ export function DeadlineBanner() {
               Closed
             </span>
             <p className="text-rose-200 font-medium tracking-wide">
-              🔒 <strong className="text-white font-bold">Canteen ordering is closed.</strong> Daily cut-off is 6:00 AM IST. Next slot for <strong className="text-white font-bold">{activeDay}</strong> opens at 12:00 PM (noon) IST.
+              🔒 <strong className="text-white font-bold">Temporarily Closed:</strong> We will let you know once we reopen the canteen.
             </p>
           </div>
         </div>
